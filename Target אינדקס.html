@@ -1,0 +1,2508 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אינדקס Target - פתרון הוליסטי לניהול חסכונות</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        body {
+            font-family: 'Heebo', sans-serif;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 12px;
+            margin-bottom: 32px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 60px;
+            height: 4px;
+            background: #1e3a8a;
+            border-radius: 2px;
+        }
+
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Rebalancing Visual Animation */
+        @keyframes balance-bar-1 {
+
+            0%,
+            100% {
+                height: 80px;
+            }
+
+            50% {
+                height: 100px;
+            }
+        }
+
+        @keyframes balance-bar-2 {
+
+            0%,
+            100% {
+                height: 50px;
+            }
+
+            50% {
+                height: 30px;
+            }
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.2;
+            }
+
+            100% {
+                transform: scale(0.95);
+                opacity: 0.5;
+            }
+        }
+
+        .visual-bar-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 24px;
+            height: 120px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .visual-bar {
+            width: 48px;
+            border-radius: 12px;
+            position: relative;
+            transition: height 0.3s ease;
+        }
+
+        .visual-bar-1 {
+            background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+            animation: balance-bar-1 4s ease-in-out infinite;
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.5);
+        }
+
+        .visual-bar-2 {
+            background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
+            animation: balance-bar-2 4s ease-in-out infinite;
+            box-shadow: 0 10px 20px -5px rgba(100, 116, 139, 0.5);
+        }
+
+        .balance-pivot {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+        }
+
+        .balance-fulcrum {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 15px solid #cbd5e1;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 leading-normal overflow-x-hidden">
+
+    <!-- Header -->
+    <nav class="bg-white border-b sticky top-0 z-50 px-4 py-3 shadow-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-900 text-white px-3 py-1 rounded font-black text-xl tracking-tighter">INDEX</div>
+                <div class="hidden md:block text-slate-500 font-bold border-r pr-3 border-slate-300">מחלקת המחקר והכלכלה
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <a href="https://indx.co.il" target="_blank"
+                    class="bg-blue-900 text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-blue-800 transition shadow-lg transform hover:-translate-y-0.5">
+                    לאתר אינדקס
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero-gradient text-white py-16 md:py-24 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 relative z-10 text-center md:text-right">
+            <span
+                class="inline-block bg-blue-500/30 border border-blue-400/50 px-4 py-1 rounded-full text-sm font-bold mb-6 italic uppercase tracking-widest">
+                ניהול חסכונות חכם, דינמי ושקוף
+            </span>
+            <h1 class="text-4xl md:text-7xl font-extrabold mb-6 leading-tight tracking-tight">
+                מודל <span class="text-blue-400">אינדקס Target</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-blue-100 max-w-4xl leading-relaxed font-light">
+                המתודולוגיה שמאחורי מודל אינדקס Target נועדה להעניק פתרון הוליסטי ומדויק לניהול חסכונות לטווח השקעה
+                ידוע.
+                המודל משלב תפיסת עולם של ניהול סיכונים אקטיבי בתוך מסגרת השקעה פסיבית.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 -mt-10 relative z-20 pb-20">
+
+        <!-- Methodology & Structure -->
+        <section class="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-10 border border-slate-100">
+            <h2 class="text-3xl font-bold mb-8 text-blue-900 section-title">מתודולוגיית הניהול ועקרונות המבנה</h2>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-6 text-lg text-slate-700 leading-relaxed">
+                    <p>
+                        המודל משתמש במנגנוני החלקה ואיזון שנועדו למקסם את התשואה ולהגן על ההון בנקודות קריטיות.
+                        זהו מודל דינמי, חכם ושקוף שדואג שהכסף של המשקיעים יהיה תמיד ברמת הסיכון הנכונה ביותר למטרתם.
+                    </p>
+
+                    <div class="bg-blue-50 p-6 rounded-2xl border-r-4 border-blue-900 mt-6 shadow-sm">
+                        <h4 class="font-bold text-blue-900 mb-2">הרכב רכיב המניות</h4>
+                        <p class="text-sm text-slate-700">
+                            מבוסס על יחס של <strong>50% חשיפה לחו"ל</strong> (באמצעות מדדי איכות כמו אינדקס World Top
+                            100
+                            ו-S&P500)
+                            ו-<strong>50% חשיפה לישראל</strong> (באמצעות אינדקס ישראל 120 ומדדי פקטורים).
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-2xl border-r-4 border-slate-500 mt-4 shadow-sm">
+                        <h4 class="font-bold text-slate-900 mb-2">הרכב רכיב האג"ח</h4>
+                        <p class="text-sm text-slate-700">
+                            100% חשיפה לישראל, תוך התמקדות באג"ח ממשלתי וקונצרני איכותי.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-slate-900 text-white p-8 rounded-3xl shadow-lg relative overflow-hidden">
+                        <div class="relative z-10">
+                            <h3 class="text-xl font-bold mb-4 text-blue-400">איזון מחדש (Rebalancing)</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                בכל רבעון/חודש מתבצע <strong>איזון כפול</strong>:
+                            </p>
+                            <ul class="text-sm text-slate-300 leading-relaxed space-y-2 mb-4 list-disc list-inside">
+                                <li>איזון פנימי בתוך רכיב המניות לשמירה על יחס 50/50 (חו"ל/ישראל).</li>
+                                <li>איזון כולל בין המניות לאג"ח כדי לעמוד ביעד המסלול.</li>
+                            </ul>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                כך מיושמת אסטרטגיה של "מכירה ביוקר וקנייה בזול" באופן אוטומטי.
+                            </p>
+                        </div>
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full"></div>
+                    </div>
+
+                    <div
+                        class="rounded-3xl shadow-sm overflow-hidden h-48 relative border border-slate-100 bg-slate-50 flex flex-col items-center justify-center p-6">
+                        <div class="visual-bar-container z-10">
+                            <div class="flex flex-col items-center gap-2 group">
+                                <div class="visual-bar visual-bar-1 group-hover:opacity-90 transition"></div>
+                                <span
+                                    class="text-[10px] font-black uppercase text-blue-900 tracking-wider">Stocks</span>
+                            </div>
+
+                            <div class="balance-pivot"></div>
+                            <div class="balance-fulcrum"></div>
+
+                            <div class="flex flex-col items-center gap-2 group">
+                                <div class="visual-bar visual-bar-2 group-hover:opacity-90 transition"></div>
+                                <span
+                                    class="text-[10px] font-black uppercase text-slate-500 tracking-wider">Bonds</span>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 bg-white/40 pointer-events-none"></div>
+                        <div
+                            class="absolute -top-10 -left-10 w-32 h-32 bg-blue-100/50 rounded-full blur-3xl animate-pulse">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Table -->
+        <section
+            class="bg-slate-900 text-slate-100 rounded-[2.5rem] p-10 md:p-12 shadow-2xl relative overflow-hidden mb-16">
+            <div class="absolute -top-20 -right-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
+
+            <div class="relative z-10">
+                <h3 class="text-3xl font-bold mb-4 text-white section-title border-slate-700 after:bg-blue-500">השוואה
+                    בינלאומית למודלים ממוקדי פרישה</h3>
+                <p class="mb-10 text-slate-400 italic">הנתונים מעודכנים לשנת 2025/2026 ומשקפים את אחוז המניות המשוער
+                    בתיק. ראו מה הגופים הגדולים בעולם עושים:</p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-center text-sm">
+                        <thead class="text-xs uppercase tracking-widest text-slate-400">
+                            <tr>
+                                <th class="p-4 text-right">מאפיין / חברה</th>
+                                <th class="p-4 text-white font-black">Vanguard</th>
+                                <th class="p-4 text-white font-black">BlackRock (LifePath)</th>
+                                <th class="p-4 text-white font-black">J.P. Morgan (Blend)</th>
+                                <th class="p-4 text-white font-black">Schwab (Target Index)</th>
+                                <th class="p-4 text-white font-black">State Street (SSGA)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800">
+                            <tr>
+                                <td class="p-4 text-right font-bold text-blue-300">גישת גלישה</td>
+                                <td class="p-4">Through (עד גיל 72)</td>
+                                <td class="p-4">To (נעצרת בפרישה)</td>
+                                <td class="p-4">Through (מבוסס התנהגות)</td>
+                                <td class="p-4">Through (ארוך - 20 ש')</td>
+                                <td class="p-4">Through (קצר - 5 ש')</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 text-right font-bold text-slate-300">קרן 2065 (צעירים)</td>
+                                <td class="p-4 font-bold text-green-400">90%</td>
+                                <td class="p-4 font-bold text-green-400">~99%</td>
+                                <td class="p-4 font-bold text-green-400">~91%</td>
+                                <td class="p-4 font-bold text-green-400">~97%</td>
+                                <td class="p-4 font-bold text-green-400">~90%</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 text-right font-bold text-slate-300">קרן 2050 (אמצע)</td>
+                                <td class="p-4 font-bold text-green-400">90%</td>
+                                <td class="p-4 font-bold text-green-400">~99%</td>
+                                <td class="p-4 font-bold text-green-400">~91%</td>
+                                <td class="p-4 font-bold text-green-400">~95%</td>
+                                <td class="p-4 font-bold text-green-400">~87%</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 text-right font-bold text-slate-300">קרן 2030 (לקראת פרישה)</td>
+                                <td class="p-4 font-bold text-yellow-500">60%</td>
+                                <td class="p-4 font-bold text-yellow-500">~50%</td>
+                                <td class="p-4 font-bold text-yellow-500">~49%</td>
+                                <td class="p-4 font-bold text-yellow-500">~59%</td>
+                                <td class="p-4 font-bold text-yellow-500">~55%</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 text-right font-bold text-slate-300">קרן Income (בפרישה)</td>
+                                <td class="p-4 text-slate-400">30%</td>
+                                <td class="p-4 text-slate-400">~40%</td>
+                                <td class="p-4 text-slate-400">~35%</td>
+                                <td class="p-4 text-slate-400">28% (בסיום)</td>
+                                <td class="p-4 text-slate-400">35%</td>
+                            </tr>
+                            <tr class="bg-blue-900/20">
+                                <td class="p-4 text-right font-bold text-blue-300">ה-"Secret Sauce"</td>
+                                <td class="p-4 text-xs leading-relaxed">גיוון עולמי וגידור מטבע</td>
+                                <td class="p-4 text-xs leading-relaxed">99% מניות לצעירים + מנגנון Paycheck</td>
+                                <td class="p-4 text-xs leading-relaxed">שילוב נכסים "מורחבים" (High Yield, EM)</td>
+                                <td class="p-4 text-xs leading-relaxed">גלישה ארוכה מאוד ועלויות רצפה</td>
+                                <td class="p-4 text-xs leading-relaxed">יעילות מוסדית ומעבר מהיר לתיק יציב</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tracks Table -->
+        <section class="mb-16">
+            <h3 class="text-2xl font-bold mb-8 text-blue-900 section-title">מסלולי האינדקס Target</h3>
+            <div class="overflow-x-auto rounded-3xl shadow-xl border border-slate-200">
+                <table class="w-full text-right text-sm bg-white">
+                    <thead class="bg-slate-900 text-white">
+                        <tr>
+                            <th class="p-5 font-bold">שם הקרן/המדד</th>
+                            <th class="p-5 font-bold">טווח שנים ליעד</th>
+                            <th class="p-5 font-bold text-center">% מניות</th>
+                            <th class="p-5 font-bold">סטטוס</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr class="hover:bg-blue-50/50 transition">
+                            <td class="p-5 font-black text-blue-900">אינדקס Target 2055</td>
+                            <td class="p-5">29 שנים</td>
+                            <td class="p-5 font-bold text-center text-blue-600 bg-blue-50 rounded-lg">90%</td>
+                            <td class="p-5 font-bold text-slate-700">צמיחה מוגברת</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50/50 transition">
+                            <td class="p-5 font-black text-blue-900">אינדקס Target 2050</td>
+                            <td class="p-5">24 שנים</td>
+                            <td class="p-5 font-bold text-center text-blue-600 bg-blue-50 rounded-lg">80%</td>
+                            <td class="p-5 font-bold text-slate-700">צמיחה</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50/50 transition">
+                            <td class="p-5 font-black text-blue-900">אינדקס Target 2045</td>
+                            <td class="p-5">19 שנים</td>
+                            <td class="p-5 font-bold text-center text-blue-600 bg-blue-50 rounded-lg">70%</td>
+                            <td class="p-5 font-bold text-slate-700">צמיחה מתונה</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50/50 transition border-l-4 border-l-blue-400">
+                            <td class="p-5 font-black text-blue-900">אינדקס Target 2040</td>
+                            <td class="p-5">14 שנים</td>
+                            <td class="p-5 font-bold text-center text-blue-600 bg-blue-50 rounded-lg">60%</td>
+                            <td class="p-5 font-bold text-slate-700">איזון סיכונים</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50/50 transition">
+                            <td class="p-5 font-black text-blue-900">אינדקס Target 2035</td>
+                            <td class="p-5">9 שנים</td>
+                            <td class="p-5 font-bold text-center text-yellow-600 bg-yellow-50 rounded-lg">50%</td>
+                            <td class="p-5 font-bold text-slate-700">אזור הסיכון ("The Risk Zone")</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50/50 transition">
+                            <td class="p-5 font-black text-blue-900">אינדקס Target 2030</td>
+                            <td class="p-5">4 שנים</td>
+                            <td class="p-5 font-bold text-center text-yellow-600 bg-yellow-50 rounded-lg">40%</td>
+                            <td class="p-5 font-bold text-slate-700">לקראת יעד</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50/50 transition bg-slate-50">
+                            <td class="p-5 font-black text-blue-900">אינדקס Target Stability / Income</td>
+                            <td class="p-5 font-black text-red-500">0 שנים</td>
+                            <td class="p-5 font-bold text-center text-green-600 bg-green-50 rounded-lg">30%</td>
+                            <td class="p-5 font-bold text-slate-900">יעד</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+
+        <!-- Mechanism & Example -->
+        <section class="mb-10">
+            <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 ai-glow">
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-6 text-blue-900 section-title">מנגנון ההחלקה הרבעוני</h2>
+                        <p class="text-lg text-slate-700 leading-relaxed mb-6">
+                            המודל מבצע התאמה של החשיפה המנייתית בכל רבעון. גישה זו מונעת את "סיכון העיתוי" (Timing Risk)
+                            ומבטיחה שהתיק תמיד נמצא במסלול הנכון ללא קפיצות חדות בסיכון.
+                        </p>
+                        <p class="text-slate-600 leading-relaxed mb-8">
+                            בניגוד לקופות גמל רגילות, שבהן משקיע בן 49 ומשקיע בן 50 נמצאים באותה קרן עם אותה רמת סיכון,
+                            המודל הזה מתאים את עצמו בכל שנה - ובאופן מדויק יותר, בכל רבעון.
+                        </p>
+
+                        <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100">
+                            <h4 class="font-bold text-blue-900 mb-3 text-lg">דוגמה מעשית: מ-2045 ל-2040 (גלישה קבועה)
+                            </h4>
+                            <ul class="space-y-3 text-slate-700">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-blue-500 font-bold">•</span>
+                                    <span>נקודת מוצא (Target 2045): <strong>70% מניות</strong></span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-blue-500 font-bold">•</span>
+                                    <span>יעד סופי (Target 2040): <strong>60% מניות</strong></span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-blue-500 font-bold">•</span>
+                                    <span>השיטה: ירידה הדרגתית של <strong>0.5% בכל רבעון</strong> (למניעת
+                                        תנודתיות)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-bold mb-6 text-blue-900">תהליך הגלישה (Glide Path) – שנה ראשונה</h3>
+                        <div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm mb-8">
+                            <table class="w-full text-right text-sm">
+                                <thead class="bg-slate-900 text-white">
+                                    <tr>
+                                        <th class="p-4">תקופה</th>
+                                        <th class="p-4">חשיפה למניות</th>
+                                        <th class="p-4">הסבר על הפעולה</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 bg-white">
+                                    <tr>
+                                        <td class="p-4 font-bold text-blue-900">1/1/2026</td>
+                                        <td class="p-4 font-black text-blue-600">70.0%</td>
+                                        <td class="p-4 text-slate-500">תחילת הגלישה לכיוון 2040</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-4 font-bold text-slate-700">סוף רבעון 1</td>
+                                        <td class="p-4 font-bold text-slate-700">69.5%</td>
+                                        <td class="p-4 text-slate-500">הפחתה של 0.5% ואיזון</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-4 font-bold text-slate-700">סוף רבעון 2</td>
+                                        <td class="p-4 font-bold text-slate-700">69.0%</td>
+                                        <td class="p-4 text-slate-500">הפחתה של 0.5% נוספים</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-4 font-bold text-slate-700">סוף רבעון 3</td>
+                                        <td class="p-4 font-bold text-slate-700">68.5%</td>
+                                        <td class="p-4 text-slate-500">המשך גלישה ליניארית</td>
+                                    </tr>
+                                    <tr class="bg-blue-50">
+                                        <td class="p-4 font-bold text-blue-900">סוף שנה 1</td>
+                                        <td class="p-4 font-black text-blue-600">68.0%</td>
+                                        <td class="p-4 text-slate-500">סיכום שנה ראשונה (ירידה של 2%)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 class="text-lg font-bold mb-4 text-blue-900">מבט ל-5 שנים</h3>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs">
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                <div class="font-bold text-slate-500 mb-1">שנה 1</div>
+                                <div class="font-black text-blue-900">68%</div>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                <div class="font-bold text-slate-500 mb-1">שנה 2</div>
+                                <div class="font-black text-blue-900">66%</div>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                <div class="font-bold text-slate-500 mb-1">שנה 3</div>
+                                <div class="font-black text-blue-900">64%</div>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                <div class="font-bold text-slate-500 mb-1">שנה 4</div>
+                                <div class="font-black text-blue-900">62%</div>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-xl border border-blue-200">
+                                <div class="font-bold text-blue-700 mb-1">שנה 5</div>
+                                <div class="font-black text-blue-900">60%</div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rebalancing Detail (New Box) -->
+        <section class="mb-16">
+            <div class="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
+                <h4 class="text-2xl font-bold text-blue-900 mb-6 section-title border-slate-200 after:bg-slate-400">
+                    איך זה עובד בפועל? פירוט האיזון ברמת המדדים
+                </h4>
+                <p class="text-lg text-slate-700 leading-relaxed mb-8">
+                    כאשר המודל מפחית באופן אוטומטי <strong>0.5%</strong> מחשיפת המניות ברבעון, השינוי מתבצע בצורה רוחבית
+                    שווה על כל המדדים בתיק, כדי לשמור על האיזון הפנימי.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-6 text-sm">
+                    <!-- Global Breakdown -->
+                    <div
+                        class="bg-blue-50/50 p-6 rounded-2xl border border-blue-100 relative overflow-hidden group hover:border-blue-300 transition">
+                        <div
+                            class="absolute top-0 right-0 w-16 h-16 bg-blue-100 rounded-bl-[40px] -mr-8 -mt-8 opacity-50">
+                        </div>
+                        <h5 class="font-black text-blue-900 mb-3 text-lg flex items-center gap-2">
+                            <span class="text-2xl font-black text-red-500">-</span> הפחתה ממניות חו"ל
+                        </h5>
+                        <div class="text-slate-600 space-y-3">
+                            <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm">
+                                <span class="font-bold text-slate-500">סה"כ הפחתה:</span>
+                                <span class="font-black text-red-500 text-lg">0.25%-</span>
+                            </div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest pt-2">מתחלק שווה
+                                (כ-0.083%- לכל מדד):</p>
+                            <ul class="text-sm space-y-2 font-medium">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-red-400 rounded-full"></span> World Top 100
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-red-400 rounded-full"></span> World Top 100 Ex-US
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-red-400 rounded-full"></span> S&P 500
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Israel Breakdown -->
+                    <div
+                        class="bg-blue-50/50 p-6 rounded-2xl border border-blue-100 relative overflow-hidden group hover:border-blue-300 transition">
+                        <div
+                            class="absolute top-0 right-0 w-16 h-16 bg-blue-200 rounded-bl-[40px] -mr-8 -mt-8 opacity-50">
+                        </div>
+                        <h5 class="font-black text-blue-900 mb-3 text-lg flex items-center gap-2">
+                            <span class="text-2xl font-black text-red-500">-</span> הפחתה ממניות ישראל
+                        </h5>
+                        <div class="text-slate-600 space-y-3">
+                            <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm">
+                                <span class="font-bold text-slate-500">סה"כ הפחתה:</span>
+                                <span class="font-black text-red-500 text-lg">0.25%-</span>
+                            </div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest pt-2">מתחלק שווה
+                                (כ-0.083%- לכל מדד):</p>
+                            <ul class="text-sm space-y-2 font-medium">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-red-400 rounded-full"></span> ישראל 120
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-red-400 rounded-full"></span> ישראל 100 (רווחיות)
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-red-400 rounded-full"></span>אינדקס 80 ישראל (מיד קאפ)
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Bonds Breakdown -->
+                    <div
+                        class="bg-green-50/50 p-6 rounded-2xl border border-green-100 relative overflow-hidden group hover:border-green-300 transition">
+                        <div
+                            class="absolute top-0 right-0 w-16 h-16 bg-green-100 rounded-bl-[40px] -mr-8 -mt-8 opacity-50">
+                        </div>
+                        <h5 class="font-black text-slate-900 mb-3 text-lg flex items-center gap-2">
+                            <span class="text-2xl font-black text-green-500">+</span> תוספת לאג"ח
+                        </h5>
+                        <div class="text-slate-600 space-y-3">
+                            <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm">
+                                <span class="font-bold text-slate-500">סה"כ תוספת:</span>
+                                <span class="font-black text-green-600 text-lg">0.5%+</span>
+                            </div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest pt-2">מתחלק שווה
+                                (0.125%+ לכל מדד):</p>
+                            <ul class="text-sm space-y-2 font-medium">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> מדורג פיזור רחב
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> מדינה (מח"מ 5)
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> מ' ישראל (מח"מ 10)
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> אינדקס A מאוזן
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Components / Selected Indices -->
+        <section class="mb-16">
+            <h3 class="text-2xl font-bold mb-8 text-blue-900 section-title">המדדים המרכיבים את המודל</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Global Stocks -->
+                <div class="bg-white p-6 rounded-3xl shadow-lg border-t-8 border-blue-500 h-full">
+                    <h4 class="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                        <span class="text-2xl">🌍</span> מניות חו"ל
+                    </h4>
+                    <p class="text-sm font-bold text-slate-500 mb-4 uppercase tracking-wider">משקל: 50% מהמניות</p>
+                    <ul class="space-y-3 text-slate-700 text-sm">
+                        <li class="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                            <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+                            אינדקס World Top 100
+                        </li>
+                        <li class="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                            <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+                            אינדקס World Top 100 Ex-US
+                        </li>
+                        <li class="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                            <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+                            מדד S&P 500
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Israel Stocks -->
+                <div class="bg-white p-6 rounded-3xl shadow-lg border-t-8 border-blue-800 h-full">
+                    <h4 class="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                        <!-- Corrected Israel Flag SVG -->
+                        <span
+                            class="w-9 h-auto shadow-sm border border-slate-100 overflow-hidden rounded-sm select-none">
+                            <svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                                <rect width="220" height="160" fill="white" />
+                                <rect y="0" width="220" height="25" fill="#3b82f6" />
+                                <rect y="135" width="220" height="25" fill="#3b82f6" />
+                                <g stroke="#3b82f6" stroke-width="7" fill="none">
+                                    <path d="M110,62 L126,89 H94 Z" />
+                                    <path d="M110,98 L126,71 H94 Z" />
+                                </g>
+                            </svg>
+                        </span>
+                        מניות ישראל
+                    </h4>
+                    <p class="text-sm font-bold text-slate-500 mb-4 uppercase tracking-wider">משקל: 50% מהמניות</p>
+                    <ul class="space-y-3 text-slate-700 text-sm">
+                        <li class="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                            <span class="w-1.5 h-1.5 bg-blue-800 rounded-full"></span>
+                            אינדקס ישראל 120
+                        </li>
+                        <li class="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                            <span class="w-1.5 h-1.5 bg-blue-800 rounded-full"></span>
+                            אינדקס ישראל 100 (רווחיות משקל שווה)
+                        </li>
+                        <li class="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                            <span class="w-1.5 h-1.5 bg-blue-800 rounded-full"></span>
+                            אינדקס 80 ישראל (מיד קאפ)
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Bonds -->
+                <div class="bg-white p-6 rounded-3xl shadow-lg border-t-8 border-slate-600 h-full">
+                    <h4 class="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                        <span class="text-2xl">🛡️</span> אג"ח
+                    </h4>
+                    <p class="text-sm font-bold text-slate-500 mb-4 uppercase tracking-wider">משקל: 100% מהאג"ח</p>
+                    <ul class="space-y-3 text-slate-700 text-sm">
+                        <li class="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                            <span class="w-1.5 h-1.5 bg-slate-600 rounded-full"></span>
+                            אינדקס מדורג פיזור רחב
+                        </li>
+                        <li class="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                            <span class="w-1.5 h-1.5 bg-slate-600 rounded-full"></span>
+                            אינדקס מדינה שקלי/צמוד (מח"מ 5 קבוע)
+                        </li>
+                        <li class="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                            <span class="w-1.5 h-1.5 bg-slate-600 rounded-full"></span>
+                            אינדקס מדינת ישראל (מח"מ 10 קבוע, שקלי)
+                        </li>
+                        <li class="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                            <span class="w-1.5 h-1.5 bg-slate-600 rounded-full"></span>
+                            אינדקס A מאוזן
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Visualization -->
+        <section class="mb-16" id="performance-section">
+            <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-xl border border-slate-100">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                    <div>
+                        <h3 class="text-3xl font-bold text-blue-900">ביצועי המודל במבחן הזמן</h3>
+                        <p class="text-slate-500 mt-2">ניתוח היסטורי (Backtest) הכולל מעבר אוטומטי בין מסלולים</p>
+                    </div>
+
+                    <!-- Track Selection Tabs -->
+                    <div class="flex bg-slate-100 p-1.5 rounded-xl overflow-x-auto max-w-full no-scrollbar">
+                        <button onclick="updateChart('Target 2055')" id="tab-2055"
+                            class="px-4 py-2 rounded-lg text-sm font-bold transition whitespace-nowrap bg-white text-blue-900 shadow-sm">Target
+                            2055</button>
+                        <button onclick="updateChart('Target 2050')" id="tab-2050"
+                            class="px-4 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-blue-900 transition whitespace-nowrap">Target
+                            2050</button>
+                        <button onclick="updateChart('Target 2045')" id="tab-2045"
+                            class="px-4 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-blue-900 transition whitespace-nowrap">Target
+                            2045</button>
+                        <button onclick="updateChart('Target 2040')" id="tab-2040"
+                            class="px-4 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-blue-900 transition whitespace-nowrap">Target
+                            2040</button>
+                        <button onclick="updateChart('Target 2035')" id="tab-2035"
+                            class="px-4 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-blue-900 transition whitespace-nowrap">Target
+                            2035</button>
+                    </div>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100">
+                        <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">תשואה כוללת*</div>
+                        <div class="text-3xl font-black text-blue-600" id="metric-return">...</div>
+                        <div class="text-xs text-blue-400 mt-1 font-bold">מצטבר ל-9 שנים (שקלית)</div>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                        <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">ערך סופי (100₪)
+                        </div>
+                        <div class="text-3xl font-black text-slate-800" id="metric-value">...</div>
+                        <div class="text-xs text-slate-400 mt-1 font-bold">שקלים חדשים</div>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                        <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">סטיית תקן</div>
+                        <div class="text-3xl font-black text-slate-800" id="metric-std">...</div>
+                        <div class="text-xs text-slate-400 mt-1 font-bold">שנתית ממוצעת</div>
+                    </div>
+                    <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100">
+                        <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">מצב נוכחי</div>
+                        <div class="text-lg font-black text-indigo-900 leading-tight" id="metric-current-track">...
+                        </div>
+                        <div class="text-xs text-indigo-400 mt-1 font-bold">לאחר גלישה</div>
+                    </div>
+                </div>
+
+                <!-- Main Chart -->
+                <div id="performanceChart" class="w-full h-[400px]"></div>
+
+                <!-- Allocation Chart -->
+                <div class="mt-8 border-t pt-8">
+                    <h4 class="text-lg font-bold text-slate-700 mb-4">מסלול הגלישה בפועל (Allocations)</h4>
+                    <div id="allocationChart" class="w-full h-[200px]"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t py-16 px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <div
+                class="bg-blue-900 text-white px-5 py-2 rounded font-black text-3xl tracking-tighter inline-block mb-6 shadow-sm">
+                INDEX
+            </div>
+            <p class="text-slate-500 text-sm max-w-sm mx-auto leading-relaxed mb-4 font-bold">המובילה בישראל ביצירת
+                וניהול מדדים פיננסיים.</p>
+            <p class="text-blue-700 text-xl font-black max-w-md mx-auto leading-relaxed mb-10 tracking-tight">
+                השקעה נכונה מתחילה במדדים נכונים.
+            </p>
+
+            <div
+                class="bg-slate-50 p-8 rounded-[2rem] border border-slate-200 text-slate-400 text-[11px] leading-relaxed max-w-4xl mx-auto shadow-inner font-light">
+                <strong>הערת אזהרה:</strong> תוכן זה מיועד למטרות אינפורמטיביות בלבד, ואינו נועד להוות ייעוץ השקעות,
+                המלצה, שידול או חוות דעת. אינדקס עושה שימוש בכלי מחקר ועיבודי בינה מלאכותית. אינדקס מחקר ופיתוח מדדים
+                בע"מ אינה אחראית לדיוק המידע או לשלמותו, והשימוש בו הוא על אחריות המשתמש הבלעדית. אין לראות במידע זה
+                תחליף למסמכים הרשמיים של החברה. השקעה במדדים כרוכה בסיכון ואובדן ערך.
+            </div>
+            <div class="mt-12 text-[10px] text-slate-400 font-black uppercase tracking-widest">
+                © 2026 אינדקס מחקר ופיתוח מדדים בע"מ. כל הזכויות שמורות.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+const chartsData = {
+  "Target 2055": {
+    "metrics": {
+      "total_return": 167.0,
+      "final_value": 267.0,
+      "std_dev": 10.95
+    },
+    "data": [
+      {
+        "date": "2017-03-31",
+        "value": 100.0,
+        "stock_pct": 90.0,
+        "bond_pct": 10.0,
+        "return_pct": 3.33,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2017-06-30",
+        "value": 103.33,
+        "stock_pct": 89.5,
+        "bond_pct": 10.5,
+        "return_pct": 2.28,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2017-09-30",
+        "value": 105.68,
+        "stock_pct": 89.0,
+        "bond_pct": 11.0,
+        "return_pct": 3.8,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2017-12-31",
+        "value": 109.7,
+        "stock_pct": 88.5,
+        "bond_pct": 11.5,
+        "return_pct": 4.29,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2018-03-31",
+        "value": 114.41,
+        "stock_pct": 88.0,
+        "bond_pct": 12.0,
+        "return_pct": -1.32,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2018-06-30",
+        "value": 112.89,
+        "stock_pct": 87.5,
+        "bond_pct": 12.5,
+        "return_pct": 2.09,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2018-09-30",
+        "value": 115.25,
+        "stock_pct": 87.0,
+        "bond_pct": 13.0,
+        "return_pct": 6.94,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2018-12-31",
+        "value": 123.25,
+        "stock_pct": 86.5,
+        "bond_pct": 13.5,
+        "return_pct": -8.03,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2019-03-31",
+        "value": 113.35,
+        "stock_pct": 86.0,
+        "bond_pct": 14.0,
+        "return_pct": 7.87,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2019-06-30",
+        "value": 122.28,
+        "stock_pct": 85.5,
+        "bond_pct": 14.5,
+        "return_pct": 3.9,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2019-09-30",
+        "value": 127.04,
+        "stock_pct": 85.0,
+        "bond_pct": 15.0,
+        "return_pct": 2.24,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2019-12-31",
+        "value": 129.9,
+        "stock_pct": 84.5,
+        "bond_pct": 15.5,
+        "return_pct": 7.27,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2020-03-31",
+        "value": 139.34,
+        "stock_pct": 84.0,
+        "bond_pct": 16.0,
+        "return_pct": -16.18,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2020-06-30",
+        "value": 116.79,
+        "stock_pct": 83.5,
+        "bond_pct": 16.5,
+        "return_pct": 7.28,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2020-09-30",
+        "value": 125.3,
+        "stock_pct": 83.0,
+        "bond_pct": 17.0,
+        "return_pct": 6.98,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2020-12-31",
+        "value": 134.04,
+        "stock_pct": 82.5,
+        "bond_pct": 17.5,
+        "return_pct": 11.8,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2021-03-31",
+        "value": 149.86,
+        "stock_pct": 82.0,
+        "bond_pct": 18.0,
+        "return_pct": 6.63,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2021-06-30",
+        "value": 159.8,
+        "stock_pct": 81.5,
+        "bond_pct": 18.5,
+        "return_pct": 5.5,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2021-09-30",
+        "value": 168.58,
+        "stock_pct": 81.0,
+        "bond_pct": 19.0,
+        "return_pct": 0.52,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2021-12-31",
+        "value": 169.45,
+        "stock_pct": 80.5,
+        "bond_pct": 19.5,
+        "return_pct": 8.81,
+        "track": "Target 2055 (90%)"
+      },
+      {
+        "date": "2022-03-31",
+        "value": 184.39,
+        "stock_pct": 80.0,
+        "bond_pct": 20.0,
+        "return_pct": -2.14,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2022-06-30",
+        "value": 180.44,
+        "stock_pct": 79.5,
+        "bond_pct": 20.5,
+        "return_pct": -7.45,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2022-09-30",
+        "value": 167.0,
+        "stock_pct": 79.0,
+        "bond_pct": 21.0,
+        "return_pct": -2.37,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2022-12-31",
+        "value": 163.05,
+        "stock_pct": 78.5,
+        "bond_pct": 21.5,
+        "return_pct": 0.47,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2023-03-31",
+        "value": 163.81,
+        "stock_pct": 78.0,
+        "bond_pct": 22.0,
+        "return_pct": 1.42,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2023-06-30",
+        "value": 166.13,
+        "stock_pct": 77.5,
+        "bond_pct": 22.5,
+        "return_pct": 6.85,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2023-09-30",
+        "value": 177.52,
+        "stock_pct": 77.0,
+        "bond_pct": 23.0,
+        "return_pct": 1.26,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2023-12-31",
+        "value": 179.76,
+        "stock_pct": 76.5,
+        "bond_pct": 23.5,
+        "return_pct": 2.65,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2024-03-31",
+        "value": 184.53,
+        "stock_pct": 76.0,
+        "bond_pct": 24.0,
+        "return_pct": 6.47,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2024-06-30",
+        "value": 196.46,
+        "stock_pct": 75.5,
+        "bond_pct": 24.5,
+        "return_pct": -1.28,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2024-09-30",
+        "value": 193.94,
+        "stock_pct": 75.0,
+        "bond_pct": 25.0,
+        "return_pct": 6.48,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2024-12-31",
+        "value": 206.51,
+        "stock_pct": 74.5,
+        "bond_pct": 25.5,
+        "return_pct": 5.71,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2025-03-31",
+        "value": 218.3,
+        "stock_pct": 74.0,
+        "bond_pct": 26.0,
+        "return_pct": 0.84,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2025-06-30",
+        "value": 220.15,
+        "stock_pct": 73.5,
+        "bond_pct": 26.5,
+        "return_pct": 10.51,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2025-09-30",
+        "value": 243.28,
+        "stock_pct": 73.0,
+        "bond_pct": 27.0,
+        "return_pct": 4.72,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2025-12-31",
+        "value": 254.77,
+        "stock_pct": 72.5,
+        "bond_pct": 27.5,
+        "return_pct": 4.8,
+        "track": "Target 2050 (80%)"
+      }
+    ]
+  },
+  "Target 2050": {
+    "metrics": {
+      "total_return": 143.89,
+      "final_value": 243.89,
+      "std_dev": 10.07
+    },
+    "data": [
+      {
+        "date": "2017-03-31",
+        "value": 100.0,
+        "stock_pct": 80.0,
+        "bond_pct": 20.0,
+        "return_pct": 3.07,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2017-06-30",
+        "value": 103.07,
+        "stock_pct": 79.5,
+        "bond_pct": 20.5,
+        "return_pct": 2.2,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2017-09-30",
+        "value": 105.34,
+        "stock_pct": 79.0,
+        "bond_pct": 21.0,
+        "return_pct": 3.58,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2017-12-31",
+        "value": 109.11,
+        "stock_pct": 78.5,
+        "bond_pct": 21.5,
+        "return_pct": 4.01,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2018-03-31",
+        "value": 113.49,
+        "stock_pct": 78.0,
+        "bond_pct": 22.0,
+        "return_pct": -1.21,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2018-06-30",
+        "value": 112.11,
+        "stock_pct": 77.5,
+        "bond_pct": 22.5,
+        "return_pct": 1.78,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2018-09-30",
+        "value": 114.11,
+        "stock_pct": 77.0,
+        "bond_pct": 23.0,
+        "return_pct": 6.21,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2018-12-31",
+        "value": 121.2,
+        "stock_pct": 76.5,
+        "bond_pct": 23.5,
+        "return_pct": -7.37,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2019-03-31",
+        "value": 112.27,
+        "stock_pct": 76.0,
+        "bond_pct": 24.0,
+        "return_pct": 7.41,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2019-06-30",
+        "value": 120.6,
+        "stock_pct": 75.5,
+        "bond_pct": 24.5,
+        "return_pct": 3.68,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2019-09-30",
+        "value": 125.03,
+        "stock_pct": 75.0,
+        "bond_pct": 25.0,
+        "return_pct": 2.33,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2019-12-31",
+        "value": 127.95,
+        "stock_pct": 74.5,
+        "bond_pct": 25.5,
+        "return_pct": 6.52,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2020-03-31",
+        "value": 136.29,
+        "stock_pct": 74.0,
+        "bond_pct": 26.0,
+        "return_pct": -15.05,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2020-06-30",
+        "value": 115.78,
+        "stock_pct": 73.5,
+        "bond_pct": 26.5,
+        "return_pct": 6.73,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2020-09-30",
+        "value": 123.57,
+        "stock_pct": 73.0,
+        "bond_pct": 27.0,
+        "return_pct": 6.41,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2020-12-31",
+        "value": 131.49,
+        "stock_pct": 72.5,
+        "bond_pct": 27.5,
+        "return_pct": 10.63,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2021-03-31",
+        "value": 145.46,
+        "stock_pct": 72.0,
+        "bond_pct": 28.0,
+        "return_pct": 5.87,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2021-06-30",
+        "value": 154.0,
+        "stock_pct": 71.5,
+        "bond_pct": 28.5,
+        "return_pct": 4.99,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2021-09-30",
+        "value": 161.68,
+        "stock_pct": 71.0,
+        "bond_pct": 29.0,
+        "return_pct": 0.62,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2021-12-31",
+        "value": 162.68,
+        "stock_pct": 70.5,
+        "bond_pct": 29.5,
+        "return_pct": 7.88,
+        "track": "Target 2050 (80%)"
+      },
+      {
+        "date": "2022-03-31",
+        "value": 175.5,
+        "stock_pct": 70.0,
+        "bond_pct": 30.0,
+        "return_pct": -2.35,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2022-06-30",
+        "value": 171.38,
+        "stock_pct": 69.5,
+        "bond_pct": 30.5,
+        "return_pct": -6.87,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2022-09-30",
+        "value": 159.6,
+        "stock_pct": 69.0,
+        "bond_pct": 31.0,
+        "return_pct": -2.36,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2022-12-31",
+        "value": 155.84,
+        "stock_pct": 68.5,
+        "bond_pct": 31.5,
+        "return_pct": 0.31,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2023-03-31",
+        "value": 156.32,
+        "stock_pct": 68.0,
+        "bond_pct": 32.0,
+        "return_pct": 1.2,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2023-06-30",
+        "value": 158.2,
+        "stock_pct": 67.5,
+        "bond_pct": 32.5,
+        "return_pct": 6.22,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2023-09-30",
+        "value": 168.04,
+        "stock_pct": 67.0,
+        "bond_pct": 33.0,
+        "return_pct": 1.03,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2023-12-31",
+        "value": 169.78,
+        "stock_pct": 66.5,
+        "bond_pct": 33.5,
+        "return_pct": 2.66,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2024-03-31",
+        "value": 174.3,
+        "stock_pct": 66.0,
+        "bond_pct": 34.0,
+        "return_pct": 5.68,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2024-06-30",
+        "value": 184.2,
+        "stock_pct": 65.5,
+        "bond_pct": 34.5,
+        "return_pct": -1.27,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2024-09-30",
+        "value": 181.87,
+        "stock_pct": 65.0,
+        "bond_pct": 35.0,
+        "return_pct": 5.97,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2024-12-31",
+        "value": 192.72,
+        "stock_pct": 64.5,
+        "bond_pct": 35.5,
+        "return_pct": 5.35,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2025-03-31",
+        "value": 203.02,
+        "stock_pct": 64.0,
+        "bond_pct": 36.0,
+        "return_pct": 0.79,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2025-06-30",
+        "value": 204.63,
+        "stock_pct": 63.5,
+        "bond_pct": 36.5,
+        "return_pct": 9.49,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2025-09-30",
+        "value": 224.06,
+        "stock_pct": 63.0,
+        "bond_pct": 37.0,
+        "return_pct": 4.3,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2025-12-31",
+        "value": 233.7,
+        "stock_pct": 62.5,
+        "bond_pct": 37.5,
+        "return_pct": 4.36,
+        "track": "Target 2045 (70%)"
+      }
+    ]
+  },
+  "Target 2045": {
+    "metrics": {
+      "total_return": 122.57,
+      "final_value": 222.57,
+      "std_dev": 9.2
+    },
+    "data": [
+      {
+        "date": "2017-03-31",
+        "value": 100.0,
+        "stock_pct": 70.0,
+        "bond_pct": 30.0,
+        "return_pct": 2.82,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2017-06-30",
+        "value": 102.82,
+        "stock_pct": 69.5,
+        "bond_pct": 30.5,
+        "return_pct": 2.11,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2017-09-30",
+        "value": 104.99,
+        "stock_pct": 69.0,
+        "bond_pct": 31.0,
+        "return_pct": 3.36,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2017-12-31",
+        "value": 108.52,
+        "stock_pct": 68.5,
+        "bond_pct": 31.5,
+        "return_pct": 3.74,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2018-03-31",
+        "value": 112.58,
+        "stock_pct": 68.0,
+        "bond_pct": 32.0,
+        "return_pct": -1.1,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2018-06-30",
+        "value": 111.34,
+        "stock_pct": 67.5,
+        "bond_pct": 32.5,
+        "return_pct": 1.48,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2018-09-30",
+        "value": 112.98,
+        "stock_pct": 67.0,
+        "bond_pct": 33.0,
+        "return_pct": 5.48,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2018-12-31",
+        "value": 119.18,
+        "stock_pct": 66.5,
+        "bond_pct": 33.5,
+        "return_pct": -6.71,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2019-03-31",
+        "value": 111.19,
+        "stock_pct": 66.0,
+        "bond_pct": 34.0,
+        "return_pct": 6.95,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2019-06-30",
+        "value": 118.92,
+        "stock_pct": 65.5,
+        "bond_pct": 34.5,
+        "return_pct": 3.46,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2019-09-30",
+        "value": 123.04,
+        "stock_pct": 65.0,
+        "bond_pct": 35.0,
+        "return_pct": 2.42,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2019-12-31",
+        "value": 126.01,
+        "stock_pct": 64.5,
+        "bond_pct": 35.5,
+        "return_pct": 5.77,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2020-03-31",
+        "value": 133.29,
+        "stock_pct": 64.0,
+        "bond_pct": 36.0,
+        "return_pct": -13.92,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2020-06-30",
+        "value": 114.73,
+        "stock_pct": 63.5,
+        "bond_pct": 36.5,
+        "return_pct": 6.17,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2020-09-30",
+        "value": 121.81,
+        "stock_pct": 63.0,
+        "bond_pct": 37.0,
+        "return_pct": 5.84,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2020-12-31",
+        "value": 128.93,
+        "stock_pct": 62.5,
+        "bond_pct": 37.5,
+        "return_pct": 9.45,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2021-03-31",
+        "value": 141.11,
+        "stock_pct": 62.0,
+        "bond_pct": 38.0,
+        "return_pct": 5.12,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2021-06-30",
+        "value": 148.33,
+        "stock_pct": 61.5,
+        "bond_pct": 38.5,
+        "return_pct": 4.48,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2021-09-30",
+        "value": 154.97,
+        "stock_pct": 61.0,
+        "bond_pct": 39.0,
+        "return_pct": 0.72,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2021-12-31",
+        "value": 156.08,
+        "stock_pct": 60.5,
+        "bond_pct": 39.5,
+        "return_pct": 6.95,
+        "track": "Target 2045 (70%)"
+      },
+      {
+        "date": "2022-03-31",
+        "value": 166.93,
+        "stock_pct": 60.0,
+        "bond_pct": 40.0,
+        "return_pct": -2.56,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2022-06-30",
+        "value": 162.65,
+        "stock_pct": 59.5,
+        "bond_pct": 40.5,
+        "return_pct": -6.29,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2022-09-30",
+        "value": 152.42,
+        "stock_pct": 59.0,
+        "bond_pct": 41.0,
+        "return_pct": -2.36,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2022-12-31",
+        "value": 148.83,
+        "stock_pct": 58.5,
+        "bond_pct": 41.5,
+        "return_pct": 0.15,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2023-03-31",
+        "value": 149.06,
+        "stock_pct": 58.0,
+        "bond_pct": 42.0,
+        "return_pct": 0.99,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2023-06-30",
+        "value": 150.53,
+        "stock_pct": 57.5,
+        "bond_pct": 42.5,
+        "return_pct": 5.6,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2023-09-30",
+        "value": 158.95,
+        "stock_pct": 57.0,
+        "bond_pct": 43.0,
+        "return_pct": 0.8,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2023-12-31",
+        "value": 160.23,
+        "stock_pct": 56.5,
+        "bond_pct": 43.5,
+        "return_pct": 2.67,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2024-03-31",
+        "value": 164.51,
+        "stock_pct": 56.0,
+        "bond_pct": 44.0,
+        "return_pct": 4.89,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2024-06-30",
+        "value": 172.56,
+        "stock_pct": 55.5,
+        "bond_pct": 44.5,
+        "return_pct": -1.25,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2024-09-30",
+        "value": 170.4,
+        "stock_pct": 55.0,
+        "bond_pct": 45.0,
+        "return_pct": 5.45,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2024-12-31",
+        "value": 179.69,
+        "stock_pct": 54.5,
+        "bond_pct": 45.5,
+        "return_pct": 4.98,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2025-03-31",
+        "value": 188.65,
+        "stock_pct": 54.0,
+        "bond_pct": 46.0,
+        "return_pct": 0.74,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2025-06-30",
+        "value": 190.04,
+        "stock_pct": 53.5,
+        "bond_pct": 46.5,
+        "return_pct": 8.48,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2025-09-30",
+        "value": 206.15,
+        "stock_pct": 53.0,
+        "bond_pct": 47.0,
+        "return_pct": 3.88,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2025-12-31",
+        "value": 214.16,
+        "stock_pct": 52.5,
+        "bond_pct": 47.5,
+        "return_pct": 3.92,
+        "track": "Target 2040 (60%)"
+      }
+    ]
+  },
+  "Target 2040": {
+    "metrics": {
+      "total_return": 102.9,
+      "final_value": 202.9,
+      "std_dev": 8.35
+    },
+    "data": [
+      {
+        "date": "2017-03-31",
+        "value": 100.0,
+        "stock_pct": 60.0,
+        "bond_pct": 40.0,
+        "return_pct": 2.57,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2017-06-30",
+        "value": 102.57,
+        "stock_pct": 59.5,
+        "bond_pct": 40.5,
+        "return_pct": 2.03,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2017-09-30",
+        "value": 104.65,
+        "stock_pct": 59.0,
+        "bond_pct": 41.0,
+        "return_pct": 3.14,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2017-12-31",
+        "value": 107.93,
+        "stock_pct": 58.5,
+        "bond_pct": 41.5,
+        "return_pct": 3.47,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2018-03-31",
+        "value": 111.68,
+        "stock_pct": 58.0,
+        "bond_pct": 42.0,
+        "return_pct": -0.99,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2018-06-30",
+        "value": 110.57,
+        "stock_pct": 57.5,
+        "bond_pct": 42.5,
+        "return_pct": 1.17,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2018-09-30",
+        "value": 111.86,
+        "stock_pct": 57.0,
+        "bond_pct": 43.0,
+        "return_pct": 4.76,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2018-12-31",
+        "value": 117.18,
+        "stock_pct": 56.5,
+        "bond_pct": 43.5,
+        "return_pct": -6.04,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2019-03-31",
+        "value": 110.1,
+        "stock_pct": 56.0,
+        "bond_pct": 44.0,
+        "return_pct": 6.5,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2019-06-30",
+        "value": 117.25,
+        "stock_pct": 55.5,
+        "bond_pct": 44.5,
+        "return_pct": 3.24,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2019-09-30",
+        "value": 121.05,
+        "stock_pct": 55.0,
+        "bond_pct": 45.0,
+        "return_pct": 2.51,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2019-12-31",
+        "value": 124.09,
+        "stock_pct": 54.5,
+        "bond_pct": 45.5,
+        "return_pct": 5.03,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2020-03-31",
+        "value": 130.32,
+        "stock_pct": 54.0,
+        "bond_pct": 46.0,
+        "return_pct": -12.8,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2020-06-30",
+        "value": 113.65,
+        "stock_pct": 53.5,
+        "bond_pct": 46.5,
+        "return_pct": 5.62,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2020-09-30",
+        "value": 120.03,
+        "stock_pct": 53.0,
+        "bond_pct": 47.0,
+        "return_pct": 5.28,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2020-12-31",
+        "value": 126.37,
+        "stock_pct": 52.5,
+        "bond_pct": 47.5,
+        "return_pct": 8.27,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2021-03-31",
+        "value": 136.82,
+        "stock_pct": 52.0,
+        "bond_pct": 48.0,
+        "return_pct": 4.36,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2021-06-30",
+        "value": 142.78,
+        "stock_pct": 51.5,
+        "bond_pct": 48.5,
+        "return_pct": 3.97,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2021-09-30",
+        "value": 148.45,
+        "stock_pct": 51.0,
+        "bond_pct": 49.0,
+        "return_pct": 0.82,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2021-12-31",
+        "value": 149.66,
+        "stock_pct": 50.5,
+        "bond_pct": 49.5,
+        "return_pct": 6.02,
+        "track": "Target 2040 (60%)"
+      },
+      {
+        "date": "2022-03-31",
+        "value": 158.67,
+        "stock_pct": 50.0,
+        "bond_pct": 50.0,
+        "return_pct": -2.78,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2022-06-30",
+        "value": 154.26,
+        "stock_pct": 49.5,
+        "bond_pct": 50.5,
+        "return_pct": -5.7,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2022-09-30",
+        "value": 145.46,
+        "stock_pct": 49.0,
+        "bond_pct": 51.0,
+        "return_pct": -2.35,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2022-12-31",
+        "value": 142.04,
+        "stock_pct": 48.5,
+        "bond_pct": 51.5,
+        "return_pct": -0.01,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2023-03-31",
+        "value": 142.03,
+        "stock_pct": 48.0,
+        "bond_pct": 52.0,
+        "return_pct": 0.77,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2023-06-30",
+        "value": 143.12,
+        "stock_pct": 47.5,
+        "bond_pct": 52.5,
+        "return_pct": 4.97,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2023-09-30",
+        "value": 150.24,
+        "stock_pct": 47.0,
+        "bond_pct": 53.0,
+        "return_pct": 0.57,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2023-12-31",
+        "value": 151.1,
+        "stock_pct": 46.5,
+        "bond_pct": 53.5,
+        "return_pct": 2.69,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2024-03-31",
+        "value": 155.15,
+        "stock_pct": 46.0,
+        "bond_pct": 54.0,
+        "return_pct": 4.1,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2024-06-30",
+        "value": 161.52,
+        "stock_pct": 45.5,
+        "bond_pct": 54.5,
+        "return_pct": -1.24,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2024-09-30",
+        "value": 159.52,
+        "stock_pct": 45.0,
+        "bond_pct": 55.0,
+        "return_pct": 4.94,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2024-12-31",
+        "value": 167.4,
+        "stock_pct": 44.5,
+        "bond_pct": 55.5,
+        "return_pct": 4.62,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2025-03-31",
+        "value": 175.14,
+        "stock_pct": 44.0,
+        "bond_pct": 56.0,
+        "return_pct": 0.68,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2025-06-30",
+        "value": 176.33,
+        "stock_pct": 43.5,
+        "bond_pct": 56.5,
+        "return_pct": 7.47,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2025-09-30",
+        "value": 189.5,
+        "stock_pct": 43.0,
+        "bond_pct": 57.0,
+        "return_pct": 3.47,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2025-12-31",
+        "value": 196.07,
+        "stock_pct": 42.5,
+        "bond_pct": 57.5,
+        "return_pct": 3.49,
+        "track": "Target 2035 (50%)"
+      }
+    ]
+  },
+  "Target 2035": {
+    "metrics": {
+      "total_return": 84.79,
+      "final_value": 184.79,
+      "std_dev": 7.51
+    },
+    "data": [
+      {
+        "date": "2017-03-31",
+        "value": 100.0,
+        "stock_pct": 50.0,
+        "bond_pct": 50.0,
+        "return_pct": 2.31,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2017-06-30",
+        "value": 102.31,
+        "stock_pct": 49.5,
+        "bond_pct": 50.5,
+        "return_pct": 1.95,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2017-09-30",
+        "value": 104.3,
+        "stock_pct": 49.0,
+        "bond_pct": 51.0,
+        "return_pct": 2.92,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2017-12-31",
+        "value": 107.35,
+        "stock_pct": 48.5,
+        "bond_pct": 51.5,
+        "return_pct": 3.19,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2018-03-31",
+        "value": 110.78,
+        "stock_pct": 48.0,
+        "bond_pct": 52.0,
+        "return_pct": -0.89,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2018-06-30",
+        "value": 109.8,
+        "stock_pct": 47.5,
+        "bond_pct": 52.5,
+        "return_pct": 0.87,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2018-09-30",
+        "value": 110.75,
+        "stock_pct": 47.0,
+        "bond_pct": 53.0,
+        "return_pct": 4.03,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2018-12-31",
+        "value": 115.21,
+        "stock_pct": 46.5,
+        "bond_pct": 53.5,
+        "return_pct": -5.38,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2019-03-31",
+        "value": 109.01,
+        "stock_pct": 46.0,
+        "bond_pct": 54.0,
+        "return_pct": 6.04,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2019-06-30",
+        "value": 115.59,
+        "stock_pct": 45.5,
+        "bond_pct": 54.5,
+        "return_pct": 3.02,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2019-09-30",
+        "value": 119.08,
+        "stock_pct": 45.0,
+        "bond_pct": 55.0,
+        "return_pct": 2.6,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2019-12-31",
+        "value": 122.17,
+        "stock_pct": 44.5,
+        "bond_pct": 55.5,
+        "return_pct": 4.28,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2020-03-31",
+        "value": 127.4,
+        "stock_pct": 44.0,
+        "bond_pct": 56.0,
+        "return_pct": -11.67,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2020-06-30",
+        "value": 112.53,
+        "stock_pct": 43.5,
+        "bond_pct": 56.5,
+        "return_pct": 5.07,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2020-09-30",
+        "value": 118.23,
+        "stock_pct": 43.0,
+        "bond_pct": 57.0,
+        "return_pct": 4.71,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2020-12-31",
+        "value": 123.8,
+        "stock_pct": 42.5,
+        "bond_pct": 57.5,
+        "return_pct": 7.09,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2021-03-31",
+        "value": 132.58,
+        "stock_pct": 42.0,
+        "bond_pct": 58.0,
+        "return_pct": 3.6,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2021-06-30",
+        "value": 137.36,
+        "stock_pct": 41.5,
+        "bond_pct": 58.5,
+        "return_pct": 3.46,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2021-09-30",
+        "value": 142.11,
+        "stock_pct": 41.0,
+        "bond_pct": 59.0,
+        "return_pct": 0.92,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2021-12-31",
+        "value": 143.42,
+        "stock_pct": 40.5,
+        "bond_pct": 59.5,
+        "return_pct": 5.08,
+        "track": "Target 2035 (50%)"
+      },
+      {
+        "date": "2022-03-31",
+        "value": 150.71,
+        "stock_pct": 40.0,
+        "bond_pct": 60.0,
+        "return_pct": -2.99,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2022-06-30",
+        "value": 146.2,
+        "stock_pct": 39.5,
+        "bond_pct": 60.5,
+        "return_pct": -5.12,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2022-09-30",
+        "value": 138.71,
+        "stock_pct": 39.0,
+        "bond_pct": 61.0,
+        "return_pct": -2.35,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2022-12-31",
+        "value": 135.46,
+        "stock_pct": 38.5,
+        "bond_pct": 61.5,
+        "return_pct": -0.16,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2023-03-31",
+        "value": 135.24,
+        "stock_pct": 38.0,
+        "bond_pct": 62.0,
+        "return_pct": 0.55,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2023-06-30",
+        "value": 135.98,
+        "stock_pct": 37.5,
+        "bond_pct": 62.5,
+        "return_pct": 4.34,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2023-09-30",
+        "value": 141.89,
+        "stock_pct": 37.0,
+        "bond_pct": 63.0,
+        "return_pct": 0.34,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2023-12-31",
+        "value": 142.37,
+        "stock_pct": 36.5,
+        "bond_pct": 63.5,
+        "return_pct": 2.7,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2024-03-31",
+        "value": 146.21,
+        "stock_pct": 36.0,
+        "bond_pct": 64.0,
+        "return_pct": 3.32,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2024-06-30",
+        "value": 151.06,
+        "stock_pct": 35.5,
+        "bond_pct": 64.5,
+        "return_pct": -1.23,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2024-09-30",
+        "value": 149.21,
+        "stock_pct": 35.0,
+        "bond_pct": 65.0,
+        "return_pct": 4.43,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2024-12-31",
+        "value": 155.82,
+        "stock_pct": 34.5,
+        "bond_pct": 65.5,
+        "return_pct": 4.26,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2025-03-31",
+        "value": 162.45,
+        "stock_pct": 34.0,
+        "bond_pct": 66.0,
+        "return_pct": 0.63,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2025-06-30",
+        "value": 163.47,
+        "stock_pct": 33.5,
+        "bond_pct": 66.5,
+        "return_pct": 6.45,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2025-09-30",
+        "value": 174.02,
+        "stock_pct": 33.0,
+        "bond_pct": 67.0,
+        "return_pct": 3.05,
+        "track": "Target 2030 (40%)"
+      },
+      {
+        "date": "2025-12-31",
+        "value": 179.32,
+        "stock_pct": 32.5,
+        "bond_pct": 67.5,
+        "return_pct": 3.05,
+        "track": "Target 2030 (40%)"
+      }
+    ]
+  }
+};
+
+
+let performanceChart = null;
+let allocationChart = null;
+
+function initCharts() {
+    // Default to 2055
+    updateChart('Target 2055');
+}
+
+function updateChart(trackName) {
+    const data = chartsData[trackName];
+    if (!data) return;
+
+    // Update Tabs UI
+    document.querySelectorAll('[id^="tab-"]').forEach(el => {
+        if(el.id === 'tab-' + trackName.split(' ')[1]) {
+            el.className = "px-4 py-2 rounded-lg text-sm font-bold transition whitespace-nowrap bg-white text-blue-900 shadow-sm border border-blue-100";
+        } else {
+            el.className = "px-4 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-blue-900 transition whitespace-nowrap hover:bg-slate-100";
+        }
+    });
+
+    // Update Metrics
+    // Animate numbers
+    animateValue("metric-return", parseFloat(document.getElementById('metric-return').innerText.replace('%','')) || 0, data.metrics.total_return, 500, '%');
+    animateValue("metric-value", parseFloat(document.getElementById('metric-value').innerText.replace('₪','')) || 100, data.metrics.final_value, 500, '₪');
+    document.getElementById('metric-std').innerText = data.metrics.std_dev + '%';
+    document.getElementById('metric-current-track').innerText = data.data[data.data.length-1].track.split('(')[0].trim();
+
+    // Prepare Series
+    const seriesData = data.data.map(d => ({
+        x: new Date(d.date).getTime(),
+        y: d.value,
+        stock: d.stock_pct,
+        bond: d.bond_pct,
+        track: d.track
+    }));
+
+    const annotations = [];
+    let currentTrack = data.data[0].track;
+    
+    // Add start annotation
+    annotations.push({
+        x: new Date(data.data[0].date).getTime(),
+        strokeDashArray: 0,
+        borderColor: '#3b82f6',
+        label: {
+            borderColor: '#3b82f6',
+            style: { color: '#fff', background: '#3b82f6' },
+            text: 'Start: ' + currentTrack.split('(')[0],
+        }
+    });
+
+    data.data.forEach((d, i) => {
+        if(d.track !== currentTrack) {
+            annotations.push({
+                x: new Date(d.date).getTime(),
+                borderColor: '#f59e0b',
+                label: {
+                    borderColor: '#f59e0b',
+                    style: { color: '#fff', background: '#f59e0b' },
+                    text: 'Transition to ' + d.track.split('(')[0],
+                    orientation: 'horizontal',
+                    offsetY: 20
+                }
+            });
+            currentTrack = d.track;
+        }
+    });
+
+    // Performance Chart Config
+    const optionsPerf = {
+        series: [{
+            name: 'Portfolio Value',
+            data: seriesData.map(d => [d.x, d.y])
+        }],
+        chart: {
+            type: 'area',
+            height: 400,
+            fontFamily: 'Heebo, sans-serif',
+            toolbar: { show: false },
+            animations: { enabled: true }
+        },
+        colors: ['#3b82f6'],
+        dataLabels: { enabled: false },
+        stroke: { curve: 'smooth', width: 3 },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.4,
+                opacityTo: 0.05,
+                stops: [0, 100]
+            }
+        },
+        xaxis: {
+            type: 'datetime',
+            tooltip: { enabled: false },
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        yaxis: {
+            labels: {
+                formatter: (val) => '₪' + val.toFixed(0),
+                style: { colors: '#94a3b8' }
+            }
+        },
+        grid: {
+            borderColor: '#f1f5f9',
+            strokeDashArray: 4
+        },
+        theme: {
+            mode: 'light'
+        },
+        annotations: {
+            xaxis: annotations
+        },
+        tooltip: {
+            y: { formatter: (val) => '₪' + val.toFixed(2) },
+            x: { format: 'dd MMM yyyy' },
+            custom: function({series, seriesIndex, dataPointIndex, w}) {
+                const d = seriesData[dataPointIndex];
+                return `
+                    <div class="px-4 py-3 bg-white border border-slate-100 shadow-xl rounded-xl text-right dir-rtl">
+                        <div class="text-xs text-slate-400 font-bold mb-1">${new Date(d.x).toLocaleDateString('en-GB')}</div>
+                        <div class="text-lg font-black text-blue-900 mb-2">₪${d.y.toFixed(2)}</div>
+                        <div class="flex gap-3 text-xs border-t pt-2 border-slate-100">
+                             <div>
+                                <span class="text-slate-400">מניות:</span>
+                                <span class="font-bold text-blue-600">${d.stock.toFixed(1)}%</span>
+                             </div>
+                             <div>
+                                <span class="text-slate-400">אג"ח:</span>
+                                <span class="font-bold text-slate-600">${d.bond.toFixed(1)}%</span>
+                             </div>
+                        </div>
+                        <div class="text-[10px] text-slate-400 mt-1">${d.track}</div>
+                    </div>
+                `
+            }
+        }
+    };
+
+    if(performanceChart) performanceChart.destroy();
+    performanceChart = new ApexCharts(document.querySelector("#performanceChart"), optionsPerf);
+    performanceChart.render();
+
+
+    // Allocation Chart (Area Stacked)
+    const optionsAlloc = {
+        series: [
+            {
+                name: 'Stocks',
+                data: seriesData.map(d => [d.x, d.stock])
+            },
+            {
+                name: 'Bonds',
+                data: seriesData.map(d => [d.x, d.bond])
+            }
+        ],
+        chart: {
+            type: 'area',
+            height: 180,
+            stacked: true,
+            fontFamily: 'Heebo, sans-serif',
+            toolbar: { show: false },
+            sparkline: { enabled: false },
+            animations: { enabled: true },
+            zoom: { enabled: false }
+        },
+        colors: ['#3b82f6', '#cbd5e1'],
+        dataLabels: { enabled: false },
+        stroke: { curve: 'smooth', width: 0 },
+        fill: { opacity: 0.8 },
+        xaxis: {
+            type: 'datetime',
+            labels: { show: true, style: { colors: '#94a3b8' } },
+            axisBorder: { show: false },
+            axisTicks: { show: false },
+            tooltip: { enabled: false }
+        },
+        yaxis: {
+            max: 100,
+            min: 0,
+            labels: { show: false }
+        },
+        legend: { position: 'top', horizontalAlign: 'right' },
+        tooltip: {
+            x: { format: 'dd MMM yyyy' },
+            y: { formatter: (val) => val.toFixed(1) + '%' }
+        }
+    };
+
+    if(allocationChart) allocationChart.destroy();
+    allocationChart = new ApexCharts(document.querySelector("#allocationChart"), optionsAlloc);
+    allocationChart.render();
+}
+
+function animateValue(id, start, end, duration, prefix='') {
+    const obj = document.getElementById(id);
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+        // Special formatting for currency vs percent
+        if(prefix === '₪') {
+             obj.innerHTML = prefix + value.toFixed(2);
+             if (progress >= 1) obj.innerHTML = prefix + end.toFixed(2);
+        } else {
+             obj.innerHTML = value.toFixed(2) + prefix;
+             if (progress >= 1) obj.innerHTML = end.toFixed(2) + prefix;
+        }
+       
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', initCharts);
+
+</script>
+</body>
+
+</html>
